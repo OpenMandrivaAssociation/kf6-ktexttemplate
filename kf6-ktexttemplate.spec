@@ -6,7 +6,7 @@
 #define git 20240217
 
 Name: kf6-ktexttemplate
-Version: 6.28.0
+Version: 6.29.0
 Release: %{?git:0.%{git}.}1
 %if 0%{?git:1}
 Source0: https://invent.kde.org/frameworks/ktexttemplate/-/archive/master/ktexttemplate-master.tar.bz2#/ktexttemplate-%{git}.tar.bz2
@@ -36,6 +36,8 @@ BuildRequires: cmake(Qt6)
 BuildRequires: cmake(Qt6QuickTest)
 BuildRequires: gperf
 Requires: %{libname} = %{EVRD}
+BuildSystem:	cmake
+BuildOption:	-DBUILD_QCH:BOOL=ON
 
 %description
 Library to allow application developers to separate the structure
@@ -60,20 +62,6 @@ Development files (Headers etc.) for %{name}.
 
 %{name} is a library to allow application developers to separate the structure of
 documents from the data they contain
-
-%prep
-%autosetup -p1 -n ktexttemplate-6.28.0
-%cmake \
-	-DBUILD_QCH:BOOL=ON \
-	-DBUILD_WITH_QT6:BOOL=ON \
-	-DKDE_INSTALL_USE_QT_SYS_PATHS:BOOL=ON \
-	-G Ninja
-
-%build
-%ninja_build -C build
-
-%install
-%ninja_install -C build
 
 %files
 %{_datadir}/qlogging-categories6/ktexttemplate.*
